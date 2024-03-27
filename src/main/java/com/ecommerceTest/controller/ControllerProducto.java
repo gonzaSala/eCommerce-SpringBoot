@@ -45,13 +45,21 @@ public class ControllerProducto {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable int id){
+    public String edit(@PathVariable int id, Model model){
         Producto prod = new Producto();
         Optional<Producto> optionalProducto = prodService.get(id);
         prod=optionalProducto.get();
 
+        model.addAttribute("prod", prod);
+
         LOGGER.info("Producto buscado: {}", prod);
 
         return "productos/edit";
+    }
+
+    @PostMapping ("/update")
+    public String update(Producto prod){
+        prodService.update(prod);
+        return "redirect:/productos";
     }
 }

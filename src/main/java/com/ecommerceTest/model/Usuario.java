@@ -102,17 +102,5 @@ public class Usuario {
         this.productos = productos;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", userName='" + userName + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", tipo='" + tipo + '\'' +
-                ", password='" + password + '\'' +
-                ", productos=" + productos +
-                '}';
-    }
+
 }
