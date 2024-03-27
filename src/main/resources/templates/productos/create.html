@@ -12,10 +12,10 @@
 
 
   <!-- Bootstrap core CSS -->
-  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link th:href="@{css/heroic-features.css}" rel="stylesheet">
+  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
 
@@ -40,7 +40,7 @@
   </ol>
 
   <h2>Crear Producto</h2>
-  <form class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+  <form class="form-horizontal" th:action="@{productos/save}" method="post" enctype="multipart/form-data">
     <div class="form-group">
       <label class="control-label col-sm-2" for="nombre">Nombre:</label>
       <div class="col-sm-10">
@@ -99,8 +99,8 @@
 
 
   <!-- Bootstrap core JavaScript -->
-  <script th:src="@{vendor/jquery/jquery.min.js}"></script>
-  <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 
