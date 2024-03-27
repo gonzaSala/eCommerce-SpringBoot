@@ -16,6 +16,7 @@ public class Producto {
 
     @ManyToOne
     private Usuario usuario;
+
     public Producto() {
     }
 
@@ -83,18 +84,5 @@ public class Producto {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    @Override
-    public String toString() {
-        return "Producto{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", imagen='" + imagen + '\'' +
-                ", precio=" + precio +
-                ", cantidad=" + cantidad +
-                ", usuario=" + usuario +
-                '}';
     }
 }
