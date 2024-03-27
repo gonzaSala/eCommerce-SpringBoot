@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 @Service
 public class UploadFileService {
-    private String folder = "image//";
+    private String folder = "images//";
 
     public String saveImage(MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
