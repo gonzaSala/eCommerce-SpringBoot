@@ -6,6 +6,7 @@ import com.ecommerceTest.service.ServiceProducto;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,10 @@ public class ControllerProducto {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ControllerProducto.class);
     @Autowired
-    private ServiceProducto pordService;
+    private ServiceProducto prodService;
     @GetMapping("")
-    public String show() {
+    public String show(Model model) {
+        model.addAttribute("productos",prodService);
         return "productos/show";
     }
 
@@ -36,7 +38,7 @@ public class ControllerProducto {
 
         Usuario u =new Usuario(1,"","","","","","", Collections.emptyList());
         producto.setUsuario(u);
-        pordService.save(producto);
+        prodService.save(producto);
         return "redirect:/productos";
     }
 }
