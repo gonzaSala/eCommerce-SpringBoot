@@ -41,7 +41,7 @@ public class ControllerProducto {
     public String save(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
         LOGGER.info("este es el objeto producto {}", producto);
 
-        Usuario u = new Usuario(1, "", "", "", "", "", "", Collections.emptyList());
+        Usuario u = new Usuario(1, "", "", "","", "", "", "", Collections.emptyList());
         producto.setUsuario(u);
 
         //imagen

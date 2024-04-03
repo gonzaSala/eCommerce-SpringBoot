@@ -3,7 +3,9 @@ package com.ecommerceTest.controller;
 import com.ecommerceTest.model.DetalleOrden;
 import com.ecommerceTest.model.Orden;
 import com.ecommerceTest.model.Producto;
+import com.ecommerceTest.model.Usuario;
 import com.ecommerceTest.service.ServiceProducto;
+import com.ecommerceTest.service.ServiceUsuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class ControllerHome {
     private final Logger log = LoggerFactory.getLogger(ControllerHome.class);
     @Autowired
     private ServiceProducto serviceProducto;
+    @Autowired
+    private ServiceUsuario serviceUsuario;
 
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
     Orden orden = new Orden();
@@ -128,8 +132,17 @@ public class ControllerHome {
         return "/usuario/carrito";
     }
 
+
     @GetMapping("/order")
-    public String order(){
+
+    public String order(Model model) {
+
+        Usuario usuario = serviceUsuario.findById(1).get();
+
+        model.addAttribute("cart", detalles);
+        model.addAttribute("orden", orden);
+        model.addAttribute("usuario", usuario);
+
         return "usuario/resumen_orden";
     }
 

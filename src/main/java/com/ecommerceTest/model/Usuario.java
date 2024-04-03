@@ -14,6 +14,7 @@ public class Usuario {
     private String userName;
     private String direccion;
     private String telefono;
+    private String email;
     private String tipo;
     private String password;
 
@@ -27,8 +28,9 @@ public class Usuario {
 
     }
 
-    public Usuario(Integer id, String nombre, String userName, String direccion, String telefono, String tipo, String password, List<Producto> productos) {
+    public Usuario(Integer id, String nombre, String userName, String email, String direccion, String telefono, String tipo, String password, List<Producto> productos) {
         this.id = id;
+        this.email = email;
         this.nombre = nombre;
         this.userName = userName;
         this.direccion = direccion;
@@ -80,6 +82,14 @@ public class Usuario {
 
     public String getTipo() {
         return tipo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setTipo(String tipo) {
