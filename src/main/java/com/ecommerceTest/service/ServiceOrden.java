@@ -7,4 +7,5 @@ import java.util.List;
 public interface ServiceOrden {
     List<Orden> findAll();
     Orden save (Orden orden);
+    String generarNumOrden();
 }

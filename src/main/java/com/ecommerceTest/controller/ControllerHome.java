@@ -4,6 +4,8 @@ import com.ecommerceTest.model.DetalleOrden;
 import com.ecommerceTest.model.Orden;
 import com.ecommerceTest.model.Producto;
 import com.ecommerceTest.model.Usuario;
+import com.ecommerceTest.service.ServiceDetalleOrden;
+import com.ecommerceTest.service.ServiceOrden;
 import com.ecommerceTest.service.ServiceProducto;
 import com.ecommerceTest.service.ServiceUsuario;
 import org.slf4j.Logger;
@@ -14,9 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -27,6 +28,11 @@ public class ControllerHome {
     private ServiceProducto serviceProducto;
     @Autowired
     private ServiceUsuario serviceUsuario;
+
+    @Autowired
+            private ServiceOrden serviceOrden;
+    @Autowired
+            private ServiceDetalleOrden serviceDetalleOrden;
 
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
     Orden orden = new Orden();
@@ -134,7 +140,6 @@ public class ControllerHome {
 
 
     @GetMapping("/order")
-
     public String order(Model model) {
 
         Usuario usuario = serviceUsuario.findById(1).get();
@@ -144,6 +149,42 @@ public class ControllerHome {
         model.addAttribute("usuario", usuario);
 
         return "usuario/resumen_orden";
+    }
+
+    @GetMapping("/saveOrder")
+    public String saveOrder(){
+
+        Date fechaCreacion = new Date();
+        orden.setFechaCreacion(fechaCreacion);
+        orden.setNumero(serviceOrden.generarNumOrden());
+
+        Usuario usuario = serviceUsuario.findById(1).get();
+
+        orden.setUsuario(usuario);
+        serviceOrden.save(orden);
+
+        for(DetalleOrden dt:detalles){
+            dt.setOrden(orden);
+            serviceDetalleOrden.save(dt);
+        }
+
+        //clear list
+        orden = new Orden();
+        detalles.clear();
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/search")
+    public String searchProduct(@RequestParam String nombre, Model model){
+
+        log.info("nombre del producto: {}", nombre);
+        String nombreMinuscula = nombre.toLowerCase();
+        List<Producto> productos = serviceProducto.findAll().stream().filter(p->p.getNombre().toLowerCase().contains(nombreMinuscula)).collect(Collectors.toList());
+        model.addAttribute("productos",productos);
+
+
+        return "usuario/home";
     }
 
 }
