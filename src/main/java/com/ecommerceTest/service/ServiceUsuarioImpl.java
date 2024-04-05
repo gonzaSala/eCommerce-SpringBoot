@@ -17,4 +17,9 @@ public class ServiceUsuarioImpl implements ServiceUsuario{
     public Optional<Usuario> findById(int id) {
         return repositoryUsuario.findById(id);
     }
+
+    @Override
+    public Usuario save(Usuario usuario) {
+        return repositoryUsuario.save(usuario);
+    }
 }

@@ -112,5 +112,17 @@ public class Usuario {
         this.productos = productos;
     }
 
-
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", userName='" + userName + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", email='" + email + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

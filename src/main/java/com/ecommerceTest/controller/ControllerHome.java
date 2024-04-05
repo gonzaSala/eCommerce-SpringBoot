@@ -38,7 +38,7 @@ public class ControllerHome {
     Orden orden = new Orden();
 
 
-    @GetMapping("")
+    @GetMapping("/")
     public String home(Model model) {
 
         model.addAttribute("productos", serviceProducto.findAll());
