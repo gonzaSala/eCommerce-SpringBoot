@@ -3,43 +3,45 @@ package com.ecommerceTest.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
+
 
 @Entity
 @Table(name = "ordenes")
 public class Orden {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String numero;
     private Date fechaCreacion;
     private Date fechaRecibida;
+
     private double total;
 
     @ManyToOne
     private Usuario usuario;
 
-    @OneToOne(mappedBy = "orden")
-    private DetalleOrden detalle;
-
+    @OneToMany(mappedBy = "orden")
+    private List<DetalleOrden> detalle;
 
     public Orden() {
+
     }
 
-    public Orden(int id, String numero, Date fechaCreacion, Date fechaRecibida, double total, Usuario usuario) {
+    public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
+        super();
         this.id = id;
         this.numero = numero;
         this.fechaCreacion = fechaCreacion;
         this.fechaRecibida = fechaRecibida;
         this.total = total;
-        this.usuario = usuario;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -75,6 +77,7 @@ public class Orden {
         this.total = total;
     }
 
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -83,23 +86,20 @@ public class Orden {
         this.usuario = usuario;
     }
 
-    public DetalleOrden getDetalle() {
+
+    public List<DetalleOrden> getDetalle() {
         return detalle;
     }
 
-    public void setDetalle(DetalleOrden detalle) {
+    public void setDetalle(List<DetalleOrden> detalle) {
         this.detalle = detalle;
     }
 
     @Override
     public String toString() {
-        return "Orden{" +
-                "id=" + id +
-                ", numero='" + numero + '\'' +
-                ", fechaCreacion=" + fechaCreacion +
-                ", fechaRecibida=" + fechaRecibida +
-                ", total=" + total +
-                ", usuario=" + usuario +
-                '}';
+        return "Orden [id=" + id + ", numero=" + numero + ", fechaCreacion=" + fechaCreacion + ", fechaRecibida="
+                + fechaRecibida + ", total=" + total + "]";
     }
+
+
 }

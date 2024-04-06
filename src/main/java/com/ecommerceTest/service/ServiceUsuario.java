@@ -9,4 +9,5 @@ public interface ServiceUsuario {
 
     Optional<Usuario> findById(int id);
     Usuario save (Usuario usuario);
+    Optional<Usuario> findByEmail(String email);
 }
