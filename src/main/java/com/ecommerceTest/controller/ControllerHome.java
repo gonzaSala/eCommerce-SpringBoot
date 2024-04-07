@@ -44,6 +44,9 @@ public class ControllerHome {
         log.info("Session del user; {}", session.getAttribute("IdUsuario"));
 
         model.addAttribute("productos", serviceProducto.findAll());
+
+        model.addAttribute("session",session.getAttribute("IdUsuario"));
+
         return "usuario/home";
     }
 
@@ -76,7 +79,6 @@ public class ControllerHome {
         detalleOrden.setTotal(producto.getPrecio() * cantidad);
         detalleOrden.setProducto(producto);
 
-        //validar que le producto no se añada 2 veces
         Integer idProducto=producto.getId();
         boolean ingresado=detalles.stream().anyMatch(p -> p.getProducto().getId()==idProducto);
 
@@ -119,12 +121,14 @@ public class ControllerHome {
     }
 
     @GetMapping("/getCart")
-    public String getCart(Model model) {
+    public String getCart(Model model, HttpSession session) {
 
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
 
-        return "usuario/carrito";
+
+        model.addAttribute("sesion", session.getAttribute("IdUsuario"));
+        return "/usuario/carrito";
     }
 
 

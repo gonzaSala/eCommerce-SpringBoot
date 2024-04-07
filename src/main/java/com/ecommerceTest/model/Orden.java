@@ -21,7 +21,7 @@ public class Orden {
     @ManyToOne
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "orden")
+    @ManyToMany(mappedBy = "orden")
     private List<DetalleOrden> detalle;
 
     public Orden() {
@@ -29,7 +29,6 @@ public class Orden {
     }
 
     public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
-        super();
         this.id = id;
         this.numero = numero;
         this.fechaCreacion = fechaCreacion;
@@ -97,9 +96,14 @@ public class Orden {
 
     @Override
     public String toString() {
-        return "Orden [id=" + id + ", numero=" + numero + ", fechaCreacion=" + fechaCreacion + ", fechaRecibida="
-                + fechaRecibida + ", total=" + total + "]";
+        return "Orden{" +
+                "id=" + id +
+                ", numero='" + numero + '\'' +
+                ", fechaCreacion=" + fechaCreacion +
+                ", fechaRecibida=" + fechaRecibida +
+                ", total=" + total +
+                ", usuario=" + usuario +
+                ", detalle=" + detalle +
+                '}';
     }
-
-
 }

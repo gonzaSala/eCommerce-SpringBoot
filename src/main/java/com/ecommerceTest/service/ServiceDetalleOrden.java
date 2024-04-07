@@ -5,4 +5,5 @@ import com.ecommerceTest.model.DetalleOrden;
 public interface ServiceDetalleOrden {
 
     DetalleOrden save(DetalleOrden detalleOrden);
+
 }

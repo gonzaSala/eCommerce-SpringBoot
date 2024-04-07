@@ -28,16 +28,17 @@ public class Usuario {
 
     }
 
-    public Usuario(Integer id, String nombre, String userName, String email, String direccion, String telefono, String tipo, String password, List<Producto> productos) {
+    public Usuario(Integer id, String nombre, String userName, String email, String direccion, String telefono,
+                   String tipo, String password) {
+        super();
         this.id = id;
-        this.email = email;
         this.nombre = nombre;
         this.userName = userName;
+        this.email = email;
         this.direccion = direccion;
         this.telefono = telefono;
         this.tipo = tipo;
         this.password = password;
-        this.productos = productos;
     }
 
     public Integer getId() {
