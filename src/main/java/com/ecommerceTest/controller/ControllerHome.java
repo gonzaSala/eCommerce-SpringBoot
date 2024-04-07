@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,11 +40,11 @@ public class ControllerHome {
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
-        log.info("Session del user; {}", session.getAttribute("IdUsuario"));
+        log.info("Session del user: {}", session.getAttribute("IdUsuario"));
 
         model.addAttribute("productos", serviceProducto.findAll());
 
-        model.addAttribute("session",session.getAttribute("IdUsuario"));
+        model.addAttribute("sesion",session.getAttribute("IdUsuario"));
 
         return "usuario/home";
     }

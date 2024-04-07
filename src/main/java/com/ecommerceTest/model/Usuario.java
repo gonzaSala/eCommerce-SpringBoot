@@ -24,13 +24,12 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Orden> ordenes;
 
-    public Usuario(){
+    public Usuario() {
 
     }
 
     public Usuario(Integer id, String nombre, String userName, String email, String direccion, String telefono,
                    String tipo, String password) {
-        super();
         this.id = id;
         this.nombre = nombre;
         this.userName = userName;
