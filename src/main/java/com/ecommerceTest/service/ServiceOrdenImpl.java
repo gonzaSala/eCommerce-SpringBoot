@@ -60,6 +60,7 @@ public class ServiceOrdenImpl implements ServiceOrden {
 
     @Override
     public List<Orden> findByUsuario(Usuario usuario) {
+
         return ordenRepository.findByUsuario(usuario);
     }
 

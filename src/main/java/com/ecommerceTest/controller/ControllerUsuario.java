@@ -1,16 +1,20 @@
 package com.ecommerceTest.controller;
 
+import com.ecommerceTest.model.Orden;
 import com.ecommerceTest.model.Usuario;
+import com.ecommerceTest.service.ServiceOrden;
 import com.ecommerceTest.service.ServiceUsuario;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -20,6 +24,9 @@ public class ControllerUsuario {
 
     @Autowired
     private ServiceUsuario serviceUsuario;
+
+    @Autowired
+    private ServiceOrden serviceOrden;
 
     @GetMapping("/registro")
     public String create(){
@@ -62,5 +69,15 @@ public class ControllerUsuario {
 
 
         return "redirect:/";
+    }
+
+    @GetMapping("/compras")
+    public String obtenerCompras(Model model, HttpSession session){
+        model.addAttribute("session", session.getAttribute("IdUsuario"));
+        Usuario usuario = serviceUsuario.findById(Integer.parseInt(session.getAttribute("IdUsuario").toString())).get();
+        List<Orden> ordenes = serviceOrden.findByUsuario(usuario);
+        model.addAttribute("ordenes",ordenes);
+        return "/usuario/compras";
+
     }
 }
