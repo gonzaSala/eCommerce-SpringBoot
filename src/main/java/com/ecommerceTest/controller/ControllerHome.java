@@ -40,19 +40,29 @@ public class ControllerHome {
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
+        Integer idUsuario = (Integer) session.getAttribute("IdUsuario");
+        String tipoUsuario = null;
+
+
         log.info("Session del user: {}", session.getAttribute("IdUsuario"));
+        if (idUsuario != null) {
+            tipoUsuario = obtenerTipoUsuario(idUsuario);
+        }
+        log.info("Tipo de usuario: {}", tipoUsuario);
 
         model.addAttribute("productos", serviceProducto.findAll());
-
-        model.addAttribute("sesion",session.getAttribute("IdUsuario"));
+        model.addAttribute("tipoUsuario", tipoUsuario);
+        model.addAttribute("sesion", session.getAttribute("IdUsuario"));
 
         return "usuario/home";
     }
 
     @GetMapping("producto_home/{id}")
-    public String productoHome(@PathVariable int id, Model model) {
+    public String productoHome(@PathVariable int id, Model model, Usuario usuario) {
         log.info("Id enviado como parámetro: {}", id);
 
+        usuario.getTipo();
+        log.info("TIPO DE USUARIO: {}", usuario);
         Producto producto = new Producto();
         Optional<Producto> productoOptional = serviceProducto.get(id);
         producto = productoOptional.get();
@@ -62,10 +72,11 @@ public class ControllerHome {
     }
 
     @PostMapping("/cart")
-    public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model) {
+    public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model,HttpSession session) {
         DetalleOrden detalleOrden = new DetalleOrden();
         Producto producto = new Producto();
         double sumaTotal = 0;
+
 
         Optional<Producto> optionalProducto = serviceProducto.get(id);
         log.info("Producto añadido: {}", optionalProducto.get());
@@ -78,8 +89,8 @@ public class ControllerHome {
         detalleOrden.setTotal(producto.getPrecio() * cantidad);
         detalleOrden.setProducto(producto);
 
-        Integer idProducto=producto.getId();
-        boolean ingresado=detalles.stream().anyMatch(p -> p.getProducto().getId()==idProducto);
+        Integer idProducto = producto.getId();
+        boolean ingresado = detalles.stream().anyMatch(p -> p.getProducto().getId() == idProducto);
 
         if (!ingresado) {
             detalles.add(detalleOrden);
@@ -90,6 +101,8 @@ public class ControllerHome {
         orden.setTotal(sumaTotal);
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
+        model.addAttribute("sesion", session.getAttribute("IdUsuario"));
+
 
         return "usuario/carrito";
     }
@@ -180,6 +193,16 @@ public class ControllerHome {
 
 
         return "usuario/home";
+    }
+
+    private String obtenerTipoUsuario(Integer idUsuario) {
+        Usuario usuario = serviceUsuario.findById(idUsuario).orElse(null);
+
+        if (usuario != null) {
+            return usuario.getTipo();
+        } else {
+            return null;
+        }
     }
 
 }

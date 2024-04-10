@@ -32,8 +32,11 @@ public class ServiceSpringBootSecurity {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/usuario/registro/**").permitAll();
+                    registry.requestMatchers("/usuario/producto_home/").permitAll();
+                    registry.requestMatchers("/").permitAll();
                     registry.requestMatchers("/administrador/**").hasRole("ADMIN");
                     registry.requestMatchers("/productos/**").hasRole("ADMIN");
+                    registry.requestMatchers("/order/**").hasAnyRole("USER","ADMIN");
                     registry.anyRequest().authenticated();
                 })
                 .formLogin(httpSecurityFormLoginConfigurer -> {
