@@ -34,6 +34,7 @@ public class ServiceSpringBootSecurity {
                     registry.requestMatchers("/usuario/registro/**").permitAll();
                     registry.requestMatchers("/usuario/producto_home/").permitAll();
                     registry.requestMatchers("/").permitAll();
+                   // registry.requestMatchers("/**").hasRole("ADMIN");
                     registry.requestMatchers("/administrador/**").hasRole("ADMIN");
                     registry.requestMatchers("/productos/**").hasRole("ADMIN");
                     registry.requestMatchers("/order/**").hasAnyRole("USER","ADMIN");

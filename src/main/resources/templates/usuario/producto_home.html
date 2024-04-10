@@ -22,11 +22,17 @@
 <body>
 
   <!-- Navigation -->
-  <div th:include="usuario/template_usuario.html::header" th:if="${sesion==null}">
+  <div th:include="usuario/template_usuario.html::header" >
   </div>
-  <div th:include="usuario/template_usuario.html::header-user" th:unless="${sesion==null}"> </div>
+  <div th:if="${tipoUsuario != null and tipoUsuario.equals('ADMIN')}">
+    <div th:include="administrador/template_admin.html::header"></div>
+  </div>
+  <div th:if="${tipoUsuario != null and tipoUsuario.equals('USER')}">
+    <div th:include="usuario/template_usuario.html::header-user"></div>
+  </div>
 
-    <!-- Page Content -->
+
+  <!-- Page Content -->
     <div class="container">
 
 

@@ -22,10 +22,14 @@
 <body>
 
 <!-- Navigation -->
-<div th:include="usuario/template_usuario.html::header" th:if="${sesion==null}">
+<div th:include="usuario/template_usuario.html::header" >
 </div>
-
-<div th:include="usuario/template_usuario.html::header-user" th:unless="${sesion==null}"> </div>
+<div th:if="${tipoUsuario != null and tipoUsuario.equals('ADMIN')}">
+    <div th:include="administrador/template_admin.html::header"></div>
+</div>
+<div th:if="${tipoUsuario != null and tipoUsuario.equals('USER')}">
+    <div th:include="usuario/template_usuario.html::header-user"></div>
+</div>
 
 
 <!-- Page Content -->
@@ -42,7 +46,7 @@
 
         <div class="col-lg-3 col-md-6 mb-4" th:each="producto: ${productos}">
             <div class="card h-100">
-                <img class="card-img-top" th:src="@{/images/{img} (img=${producto.imagen})}" alt="">
+                <img class="card-img-top img-thumbnail" th:src="@{/images/{img} (img=${producto.imagen})}" alt="">
                 <div class="card-body">
                     <p class="card-text" th:text="${producto.nombre}"></p>
                 </div>

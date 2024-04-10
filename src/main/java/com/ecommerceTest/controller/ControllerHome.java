@@ -58,16 +58,29 @@ public class ControllerHome {
     }
 
     @GetMapping("producto_home/{id}")
-    public String productoHome(@PathVariable int id, Model model, Usuario usuario) {
+    public String productoHome(@PathVariable int id, Model model, HttpSession session) {
         log.info("Id enviado como parámetro: {}", id);
 
-        usuario.getTipo();
-        log.info("TIPO DE USUARIO: {}", usuario);
-        Producto producto = new Producto();
+        Integer userId = (Integer) session.getAttribute("IdUsuario");
+        if (userId != null) {
+            Optional<Usuario> userOptional = serviceUsuario.findById(userId);
+            if (userOptional.isPresent()) {
+                Usuario usuario = userOptional.get();
+                String tipoUsuario = usuario.getTipo();
+
+                model.addAttribute("tipoUsuario", tipoUsuario);
+            }
+        }
+
         Optional<Producto> productoOptional = serviceProducto.get(id);
-        producto = productoOptional.get();
+        Producto producto = productoOptional.orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
         model.addAttribute("producto", producto);
+
+        if (userId != null) {
+            model.addAttribute("sesion", userId);
+        }
+
         return "usuario/producto_home";
     }
 
@@ -184,11 +197,19 @@ public class ControllerHome {
     }
 
     @PostMapping("/search")
-    public String searchProduct(@RequestParam String nombre, Model model) {
+    public String searchProduct(@RequestParam String nombre, Model model, HttpSession session) {
+        Integer idUsuario = (Integer) session.getAttribute("IdUsuario");
+        String tipoUsuario = null;
+        if (idUsuario != null) {
+            tipoUsuario = obtenerTipoUsuario(idUsuario);
+        }
 
         log.info("nombre del producto: {}", nombre);
         String nombreMinuscula = nombre.toLowerCase();
         List<Producto> productos = serviceProducto.findAll().stream().filter(p -> p.getNombre().toLowerCase().contains(nombreMinuscula)).collect(Collectors.toList());
+
+        model.addAttribute("tipoUsuario", tipoUsuario);
+        model.addAttribute("sesion", session.getAttribute("IdUsuario"));
         model.addAttribute("productos", productos);
 
 
